@@ -8,7 +8,7 @@ class Cli
         puts "Hello, welcome to the weather app."
          account_check = prompt.yes?("Do you have an account?")
         if account_check
-            username_check
+            login
         else
             create_account
         end
@@ -42,6 +42,38 @@ class Cli
             end
         end
         return username
+    end
+
+    def self.login
+        username = username_check
+            user = User.find_by(username: username)
+            password = nil
+            while user.password != password
+                password = prompt.mask("Password:")
+                if user.password != password
+                    puts "Please try again."
+                end
+            end
+            puts "Success."
+    end
+
+    def self.menu
+        select = prompt.select("What would you like to do:", ["Add New City", "See Your Cities", "Remove a City", "Logout"])
+        case select
+        when "Add New City"
+            add_new_city
+        when "See Your Cities"
+            puts "See Your Cities"
+        when "Remove a City"
+            puts "Remove a City"
+        when "Logout"
+            puts "Logout"
+        end
+    end
+
+    def self.add_new_city
+        new_city = prompt.ask("Which city would you like to add:")
+        
     end
 
 end

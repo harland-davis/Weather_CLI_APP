@@ -1,6 +1,5 @@
 require_relative 'config/environment'
 
-Cli.run
+# Cli.menu
 
-# binding.pry
-
+binding.pry
