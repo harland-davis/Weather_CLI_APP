@@ -67,18 +67,34 @@ class Cli
         when "Remove a City"
             puts "Remove a City"
         when "Logout"
-            puts "Logout"
+            logout
         end
     end
 
     def self.add_new_city user
-        new_city = City.first.name
-        while City.find_by(name: new_city)
+        new_city = nil
+        while !City.find_by(name: new_city)
             new_city = prompt.ask("Which city would you like to add:")
             if City.find_by(name: new_city)
                 city = City.find_by(name: new_city)
                 FavoriteCity.create(user: user, city: city)
+                puts "You've added #{city.name} to your favorite cities!"
+                menu
+            end
+            if !City.find_by(name: new_city)
+                api_call = true
+                if api_call
+                    city = City.create(name: new_city)
+                    FavoriteCity.create(user: user, city: city)
+                    puts "You've added #{city.name} to your favorite cities!"
+                    menu
+                end
             end
         end
     end
+
+    def self.logout
+        exit!
+    end
+
 end
