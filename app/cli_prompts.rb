@@ -71,9 +71,14 @@ class Cli
         end
     end
 
-    def self.add_new_city
-        new_city = prompt.ask("Which city would you like to add:")
-        
+    def self.add_new_city user
+        new_city = City.first.name
+        while City.find_by(name: new_city)
+            new_city = prompt.ask("Which city would you like to add:")
+            if City.find_by(name: new_city)
+                city = City.find_by(name: new_city)
+                FavoriteCity.create(user: user, city: city)
+            end
+        end
     end
-
 end

@@ -1,5 +1,5 @@
 require_relative 'config/environment'
 
-# Cli.menu
+Cli.add_new_city
 
-binding.pry
+# binding.pry
