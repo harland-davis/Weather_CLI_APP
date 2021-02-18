@@ -24,13 +24,21 @@ class Cli
         puts "That username is available."
         new_password = prompt.ask("Please enter a password:")
         User.create(username: new_username, password: new_password)
+        $user = User.find_by(username: new_username)
+        system("sleep 1")
+        system("clear")
         puts "Congratulations, you've created an account!"
+        system("sleep 1")
+        system("clear")
+        menu
     end
 
     def self.username_creation
         test_name = User.first.username
         while User.find_by(username: test_name)
             test_name = prompt.ask("Please enter a username:")
+            system("sleep 1")
+            system("clear")
             if User.find_by(username: test_name)
                 puts "That username already exists, please choose another."
             end
@@ -78,6 +86,8 @@ class Cli
 
     def self.menu
         select = prompt.select("What would you like to do:", ["Add New City", "See Your Cities", "Remove a City", "Logout"])
+        system("sleep 1.25")
+        system("clear")
         case select
         when "Add New City"
             add_new_city $user
@@ -96,8 +106,13 @@ class Cli
             new_city = prompt.ask("Which city would you like to add:")
             if City.find_by(name: new_city)
                 city = City.find_by(name: new_city)
+                user = User.find($user.id)
+                if user.cities.any? { |city| city.name == new_city }
+                    puts "It looks like you've already added this city."
+                else
                 FavoriteCity.create(user: user, city: city)
                 puts "You've added #{city.name} to your favorite cities!"
+                end
                 menu
             end
             if !City.find_by(name: new_city)
@@ -117,9 +132,12 @@ class Cli
     end
 
     def self.view_favorite_cities user
-        # binding.pry
         cities_array = User.find(user.id).cities.map do |city|
             city.name
+        end
+        if cities_array.empty?
+            puts "Looks like you don't have any cities added yet."
+            add_new_city user
         end
         selected_city = prompt.select("Select your city:", cities_array)
         Weather.new(selected_city).current_weather
