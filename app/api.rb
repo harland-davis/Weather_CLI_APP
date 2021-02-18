@@ -64,11 +64,12 @@ class Weather
         when 35..300
             wind_speed = "very strong wind"
         end
+        description = data["weather"][0]["description"] == "clear skies" ? "clear skies" : data["weather"][0]["description"] 
         puts "It is currently #{data["main"]["temp"].round}℉ in #{city}."
         system("sleep .75")
         puts "Today's high is #{data["main"]["temp_max"].round}℉, with a low of #{data["main"]["temp_min"].round}℉"
         system("sleep .75")
-        puts "You can expect #{data["weather"][0]["description"]} today with #{wind_speed}."
+        puts "You can expect #{description} today with #{wind_speed}."
         system("sleep .75")
     end
 
