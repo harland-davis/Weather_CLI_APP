@@ -6,8 +6,12 @@ class Cli
     end
 
     def self.run
+        system("clear")
         puts "Hello, welcome to the weather app."
+        system("sleep 1")
         account_check = prompt.yes?("Do you have an account?")
+        system("sleep 1")
+        system("clear")
         if account_check
             login
         else
@@ -37,11 +41,13 @@ class Cli
     def self.username_check
         username = nil
         while !User.find_by(username: username)
+            puts "Awesome, please enter you're username and password."
             username = prompt.ask("Username:")
             if !User.find_by(username: username)
                 puts "That user name does not exit. Please try another."
             end
         end
+        system("clear")
         return username
     end
 
@@ -50,12 +56,22 @@ class Cli
             $user = User.find_by(username: username)
             password = nil
             while $user.password != password
+                puts "Awesome, please enter you're username and password."
+                puts "Username: #{username}"
                 password = prompt.mask("Password:")
                 if $user.password != password
+                    system("clear")
+                    puts "Incorrect Password."
+                    system("sleep 1")
                     puts "Please try again."
+                    system("sleep 1")
+                    system("clear")
                 end
             end
+            system("clear")
             puts "Success."
+            system("sleep 1.25")
+            system("clear")
             $user
             menu
     end
