@@ -65,8 +65,11 @@ class Weather
             wind_speed = "very strong wind"
         end
         puts "It is currently #{data["main"]["temp"].round}℉ in #{city}."
+        system("sleep .75")
         puts "Today's high is #{data["main"]["temp_max"].round}℉, with a low of #{data["main"]["temp_min"].round}℉"
+        system("sleep .75")
         puts "You can expect #{data["weather"][0]["description"]} today with #{wind_speed}."
+        system("sleep .75")
     end
 
     def valid_city

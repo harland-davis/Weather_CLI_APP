@@ -10,7 +10,6 @@ class Cli
         puts "Hello, welcome to the weather app."
         system("sleep 1")
         account_check = prompt.yes?("Do you have an account?")
-        system("sleep 1")
         system("clear")
         if account_check
             login
@@ -86,7 +85,6 @@ class Cli
 
     def self.menu
         select = prompt.select("What would you like to do:", ["Add New City", "See Your Cities", "Remove a City", "Logout"])
-        system("sleep 1.25")
         system("clear")
         case select
         when "Add New City"
@@ -104,14 +102,19 @@ class Cli
         new_city = nil
         while !City.find_by(name: new_city)
             new_city = prompt.ask("Which city would you like to add:")
+            system("clear")
             if City.find_by(name: new_city)
                 city = City.find_by(name: new_city)
                 user = User.find($user.id)
                 if user.cities.any? { |city| city.name == new_city }
                     puts "It looks like you've already added this city."
+                    system("sleep 2.5")
+                    system("clear")
                 else
                 FavoriteCity.create(user: user, city: city)
                 puts "You've added #{city.name} to your favorite cities!"
+                system("sleep 1")
+                system("clear")
                 end
                 menu
             end
@@ -121,9 +124,11 @@ class Cli
                     city = City.create(name: new_city)
                     FavoriteCity.create(user: user, city: city)
                     puts "You've added #{city.name} to your favorite cities!"
+                    system("sleep 2")
+                    system("clear")
                     menu
                 else
-                    puts "Sorry, we couldn't find that city."
+                    puts "Sorry, we couldn't find #{new_city}."
                     puts "Please try again."
                     add_new_city $user
                 end
@@ -140,8 +145,11 @@ class Cli
             add_new_city user
         end
         selected_city = prompt.select("Select your city:", cities_array)
+        system("clear")
         Weather.new(selected_city).current_weather
+        puts ""
         selection = prompt.select(nil, ["See more cities", "Return to menu"])
+        system("clear")
         case selection
         when "See more cities"
             view_favorite_cities $user
@@ -155,13 +163,19 @@ class Cli
             city.name
         end
         selected_city = prompt.select("Select a city to delete:", cities_array)
+        system("clear")
         selected_city_2 = City.find_by(name: selected_city) 
         deleted_selected_city = FavoriteCity.where(user_id: user.id, city: selected_city_2.id)
         FavoriteCity.destroy(deleted_selected_city[0].id)
+        puts "We've removed #{selected_city} from your favorites."
+        system("sleep 2.5")
         menu
     end
     
     def self.logout
+        puts "See you soon!"
+        system("sleep 2")
+        system("clear")
         exit!
     end
 
