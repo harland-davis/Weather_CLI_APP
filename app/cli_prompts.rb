@@ -85,19 +85,24 @@ class Cli
                 menu
             end
             if !City.find_by(name: new_city)
-                api_call = true
+                api_call = Weather.new(new_city).valid_city
                 if api_call
                     city = City.create(name: new_city)
                     FavoriteCity.create(user: user, city: city)
                     puts "You've added #{city.name} to your favorite cities!"
                     menu
+                else
+                    puts "Sorry, we couldn't find that city."
+                    puts "Please try again."
+                    add_new_city $user
                 end
             end
         end
     end
 
     def self.view_favorite_cities user
-        cities_array = user.cities.map do |city|
+        # binding.pry
+        cities_array = User.find(user.id).cities.map do |city|
             city.name
         end
         selected_city = prompt.select("Select your city:", cities_array)
@@ -105,14 +110,14 @@ class Cli
         selection = prompt.select(nil, ["See more cities", "Return to menu"])
         case selection
         when "See more cities"
-            view_favorite_cities
+            view_favorite_cities $user
         when "Return to menu"
             menu
         end
     end
     
     def self.remove_a_favorite_city user
-        cities_array = user.cities.map do |city|
+        cities_array = User.find(user.id).cities.map do |city|
             city.name
         end
         selected_city = prompt.select("Select a city to delete:", cities_array)
