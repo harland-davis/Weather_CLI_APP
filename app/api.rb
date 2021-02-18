@@ -67,7 +67,6 @@ class Weather
         puts "It is currently #{data["main"]["temp"].round}℉ in #{city}."
         puts "Today's high is #{data["main"]["temp_max"].round}℉, with a low of #{data["main"]["temp_min"].round}℉"
         puts "You can expect #{data["weather"][0]["description"]} today with #{wind_speed}."
-
     end
 
     def valid_city

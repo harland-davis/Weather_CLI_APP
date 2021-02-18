@@ -1,3 +1,4 @@
+require_relative "api.rb"
 
 class Cli 
     def self.prompt
@@ -6,7 +7,7 @@ class Cli
 
     def self.run
         puts "Hello, welcome to the weather app."
-         account_check = prompt.yes?("Do you have an account?")
+        account_check = prompt.yes?("Do you have an account?")
         if account_check
             login
         else
@@ -46,26 +47,28 @@ class Cli
 
     def self.login
         username = username_check
-            user = User.find_by(username: username)
+            $user = User.find_by(username: username)
             password = nil
-            while user.password != password
+            while $user.password != password
                 password = prompt.mask("Password:")
-                if user.password != password
+                if $user.password != password
                     puts "Please try again."
                 end
             end
             puts "Success."
+            $user
+            menu
     end
 
     def self.menu
         select = prompt.select("What would you like to do:", ["Add New City", "See Your Cities", "Remove a City", "Logout"])
         case select
         when "Add New City"
-            add_new_city
+            add_new_city $user
         when "See Your Cities"
-            puts "See Your Cities"
+            view_favorite_cities $user
         when "Remove a City"
-            puts "Remove a City"
+            remove_a_favorite_city $user
         when "Logout"
             logout
         end
@@ -93,6 +96,32 @@ class Cli
         end
     end
 
+    def self.view_favorite_cities user
+        cities_array = user.cities.map do |city|
+            city.name
+        end
+        selected_city = prompt.select("Select your city:", cities_array)
+        Weather.new(selected_city).current_weather
+        selection = prompt.select(nil, ["See more cities", "Return to menu"])
+        case selection
+        when "See more cities"
+            view_favorite_cities
+        when "Return to menu"
+            menu
+        end
+    end
+    
+    def self.remove_a_favorite_city user
+        cities_array = user.cities.map do |city|
+            city.name
+        end
+        selected_city = prompt.select("Select a city to delete:", cities_array)
+        selected_city_2 = City.find_by(name: selected_city) 
+        deleted_selected_city = FavoriteCity.where(user_id: user.id, city: selected_city_2.id)
+        FavoriteCity.destroy(deleted_selected_city[0].id)
+        menu
+    end
+    
     def self.logout
         exit!
     end
