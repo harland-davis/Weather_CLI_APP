@@ -33,14 +33,14 @@ ruby runner.rb
 * Checks if city is available in OpenWeather's API
 * Checks if city is already a City or Favorite Object
 
-### See Cities
+#### See Cities
 * Returns string interpolation of weather temps and conditions.
 * Case/When statements & ternary statements handle grammar oddities.
 
-### Remove Cities
+#### Remove Cities
 * Removes Favorite Object, while maintaining City Object for other users.
 
-### Logout
+#### Logout
 * Exits program.
 
 ## Code We're Proud Of
