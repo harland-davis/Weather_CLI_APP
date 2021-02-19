@@ -25,23 +25,23 @@ ruby runner.rb
 
 ## Current Features
 
-* Login
-** Checks for unique usernames at the model level.
-** Does live password validations.
+#### Login
+* Checks for unique usernames at the model level.
+* Does live password validations.
 
-### Add Favorite City
+#### Add Favorite City
 * Checks if city is available in OpenWeather's API
 * Checks if city is already a City or Favorite Object
 
-* See Cities
-** Returns string interpolation of weather temps and conditions.
-** Case/When statements & ternary statements handle grammar oddities.
+### See Cities
+* Returns string interpolation of weather temps and conditions.
+* Case/When statements & ternary statements handle grammar oddities.
 
-* Remove Cities
-** Removes Favorite Object, while maintaining City Object for other users.
+### Remove Cities
+* Removes Favorite Object, while maintaining City Object for other users.
 
-* Logout
-** Exits program.
+### Logout
+* Exits program.
 
 ## Code We're Proud Of
 
