@@ -29,9 +29,9 @@ ruby runner.rb
 ** Checks for unique usernames at the model level.
 ** Does live password validations.
 
-* Add Favorite City
-** Checks if city is available in OpenWeather's API
-** Checks if city is already a City or Favorite Object
+### Add Favorite City
+* Checks if city is available in OpenWeather's API
+* Checks if city is already a City or Favorite Object
 
 * See Cities
 ** Returns string interpolation of weather temps and conditions.
