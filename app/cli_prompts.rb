@@ -7,7 +7,15 @@ class Cli
 
     def self.run
         system("clear")
-        puts "Hello, welcome to the weather app."
+        weather_app_banner
+        system("sleep 1.5")
+        25.times { 
+            puts "" 
+            system("sleep 0.035")
+        }
+        system("clear")
+        # system("clear")
+        puts "Hello, welcome to the weather cli."
         system("sleep 1")
         account_check = prompt.yes?("Do you have an account?")
         system("clear")
@@ -84,13 +92,13 @@ class Cli
     end
 
     def self.menu
-        select = prompt.select("What would you like to do:", ["Add New City", "See Your Cities", "Remove a City", "Logout"])
+        select = prompt.select("What would you like to do:", ["See Your Cities", "Add New City", "Remove a City", "Logout"])
         system("clear")
         case select
-        when "Add New City"
-            add_new_city $user
         when "See Your Cities"
             view_favorite_cities $user
+        when "Add New City"
+            add_new_city $user
         when "Remove a City"
             remove_a_favorite_city $user
         when "Logout"
@@ -177,6 +185,36 @@ class Cli
         system("sleep 2")
         system("clear")
         exit!
+    end
+
+    def self.weather_app_banner 
+        umbrella_banner
+        a = Artii::Base.new :font => 'slant'
+        puts a.asciify('Weather CLI!')
+    end
+    def self.umbrella_banner
+        puts <<-'EOF'                                                                          
+           `..--..`                  
+       ./shmNMMMMMMMMMmhs+-        
+    :ymMMMMMMMMMMMMMMMMMMMMNdM/         
+ .sNMMMMMMMMMMMMMMMMMMMMMMMMMMMy-       
+.+/+odMMMMMMMMMMMMMMMMMMMMMMMMMMMh-     
+      .yMMMMMMMMMMMMMMMMMMMMMMMMMMMs    
+        yMMMMMMMMMMMMMMMMMMMMMMMMMMMd`  
+        /dso+oymMMMMMMMMMMMMMMMMMMMMMm` 
+                -dMMMMMMMMMMMMMMMMMMMMh 
+                 `dMMMMMMMMMMMMMMMMMMMM:
+                  hNysoshNMMMMMMMMMMMMMh
+                `hm.     `/NMMMMMMMMMMMN
+               -mh`        .NMMMMMMMMMMM
+              /No           ymhssymMMMMm
+             sN/            `      .sMMo
+  .        `hm.                      :N`
+sN`      -mh`                        - 
+ sN`     /No                            
+  smo::/yN/                             
+   `:+o+:                                                                                                                         
+        EOF
     end
 
 end

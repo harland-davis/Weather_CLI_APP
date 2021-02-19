@@ -12,6 +12,7 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2)
+    artii (2.1.2)
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     i18n (1.7.0)
@@ -60,6 +61,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  artii (~> 2.1, >= 2.1.2)
   pry
   rake
   require_all

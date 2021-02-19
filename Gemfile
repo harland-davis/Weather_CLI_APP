@@ -10,3 +10,4 @@ gem "rake"
 gem "sqlite3"
 gem "require_all"
 gem "tty-prompt"
+gem 'artii', '~> 2.1', '>= 2.1.2'
