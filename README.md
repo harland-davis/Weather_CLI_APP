@@ -107,3 +107,6 @@ class Weather
         end
     end
 ```
+
+## Contact
+Created by [Blake Runyon](https://www.linkedin.com/in/blakerunyon/) and [Kyle Davis](google.com)
